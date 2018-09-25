@@ -17,14 +17,14 @@ def index(request):
         }
         return redirect('/result', context)
     if request.method == 'GET':
-        url_root = "https://www.themealdb.com/api/json/v1/"
-        api_key = api_keys['api_key']
-        print(api_key)
-        url_tail = "/random.php"
-        url = str(url_root) + str(api_key) + str(url_tail)
-        response = requests.get(url)
-        random_food = response.json()
-        print(random_food)
+        # url_root = "https://www.themealdb.com/api/json/v1/"
+        # api_key = api_keys['api_key']
+        # print(api_key)
+        # url_tail = "/random.php"
+        # url = str(url_root) + str(api_key) + str(url_tail)
+        # response = requests.get(url)
+        # random_food = response.json()
+        # print(random_food)
         print("Making a GET Request")
         return render(request, 'food_api/index.html')
 
@@ -35,3 +35,13 @@ def result(request):
         'food_name': food_name,
     }
     return render(request, 'food_api/result.html', context)
+
+def categories(request):
+    url = 'https://www.themealdb.com/api/json/v1/1/categories.php'
+    response = requests.get(url)
+    categories = response.json()
+    print("Categories: {}".format(categories))
+    context = {
+        'categories': categories,
+    }
+    return render(request, 'food_api/categories.html', context)
